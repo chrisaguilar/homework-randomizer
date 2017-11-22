@@ -19,18 +19,23 @@ students = [
 
 assigned = {}
 
+# Use random.shuffle to randomize the students array in-place
 shuffle(students)
 
+# Divide the students into equally-sized sub-arrays with overflow put into the last.
 divided = [students[i:i + 10] for i in range(0, len(students), 10)]
 
 def assign(name, section):
+    # Add the instructor:students relationship to the `assigned` object.
     assigned[name] = section
 
+# Assign instructors to students
 assign('Chris', divided[0])
 assign('Danielle', divided[1])
 assign('Jack', divided[2])
 assign('Jieun', divided[3])
 assign('Andy', divided[4])
 
-with open('assigned.json', 'w') as outfile:
+# Write the `assigned` object to ./assigned.json as a JSON-formatted structure.
+with open('./assigned.json', 'w') as outfile:
     dump(assigned, outfile)

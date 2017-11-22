@@ -2,44 +2,55 @@
 
 const fs = require('fs');
 const { promisify } = require('util');
-const writeFile = promisify(fs.writeFile);
 
 const assigned = require('./assigned.json');
 
+const writeFile = promisify(fs.writeFile);
+
 function makeRow(name, students) {
-    const studentRows = students.slice(1).map(student => `<tr><td>${student}</td></tr>`).join('');
+    // For each student after index 0, create a table row.
+    const studentRows = students.slice(1).map(student => `<tr><td>${student}</td></tr>`);
+
+    // Return the table-formatted instructor:students relationship.
+    // The first student must go in the same table row as the instructor's name.
     return `
         <tr>
             <th scope="row" rowspan=${students.length} style="vertical-align: middle;">${name}</th>
             <td>${students[0]}</td>
         </tr>
-        ${studentRows}
+        ${studentRows.join('')}
     `;
 }
 
 function makeTable() {
-    const data = Object.entries(assigned).map(([name, students]) => makeRow(name, students)).join('');
-    const today = new Date(Date.now()).toLocaleString().split(',')[0];
+    // Create the table-formatted data for each instructor:students relationship
+    const data = Object.entries(assigned).map(([name, students]) => makeRow(name, students));
+
+    // Get today's date in MM/DD/YYYY format
+    const today = new Date().toLocaleString().split(',')[0];
+
+    // Return the entire table structure, insert the date and the formatted data.
     return `
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th scope="col" colspan=2>Homewwork Randomizations for the week of ${today}</th>
-            </tr>
-            <tr>
-                <th scope="col">Instructor</th>
-                <th scope="col">Student</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${data}
-        </tbody>
-    </table>
-    `
+        <table class="table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th scope="col" colspan=2>Homewwork Randomizations for the week of ${today}</th>
+                </tr>
+                <tr>
+                    <th scope="col">Instructor</th>
+                    <th scope="col">Student</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.join('')}
+            </tbody>
+        </table>
+    `;
 }
 
 function makeHTML() {
-    return `
+    // Create the entire HTML document, insert the generated table into the body.
+    const html = `
         <!doctype html>
         <html lang="en">
             <head>
@@ -58,11 +69,20 @@ function makeHTML() {
             </body>
         </html>
     `;
+
+    // Replace spacing between tags with whitespace
+    // Remove whitespace from beginning
+    // Return "minified" HTML
+    return html.replace(/>\s*</g, '><').replace(/^\s*/, '')
 }
 
 async function main() {
-    const file = makeHTML().replace(/>\s*</g, '><').replace(/^\s*/, '');
-    await writeFile('./index.html', file, 'utf8');
+    try {
+        // Write the generated HTML to ./index.html
+        await writeFile('./index.html', makeHTML(), 'utf8');
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 main();
