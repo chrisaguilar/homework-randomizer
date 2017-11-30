@@ -34,7 +34,7 @@ function makeTable() {
         <table class="table table-bordered table-sm">
             <thead>
                 <tr>
-                    <th scope="col" colspan=2>Homewwork Randomizations for the week of ${today}</th>
+                    <th scope="col" colspan=2>Homework Randomizations for the week of ${today}</th>
                 </tr>
                 <tr>
                     <th scope="col">Instructor</th>
