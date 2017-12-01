@@ -7,24 +7,48 @@ const assigned = require('./assigned.json');
 
 const writeFile = promisify(fs.writeFile);
 
-function makeRow(name, students) {
+function makeRow([name, students]) {
     // For each student after index 0, create a table row.
-    const studentRows = students.slice(1).map(student => `<tr><td>${student}</td></tr>`);
+    const studentRows = students
+        .slice(1)
+        .map(student => `<tr><td>${student}</td></tr>`);
 
     // Return the table-formatted instructor:students relationship.
     // The first student must go in the same table row as the instructor's name.
     return `
         <tr>
-            <th scope="row" rowspan=${students.length} style="vertical-align: middle;">${name}</th>
-            <td>${students[0]}</td>
+            <th scope="row" rowspan=${
+                students.length
+            } style="vertical-align: middle;">
+                ${name}
+            </th>
+            <td>
+                ${students[0]}
+            </td>
         </tr>
         ${studentRows.join('')}
     `;
 }
 
+function sortInstructors(a, b) {
+    if (a[0] < b[0]) return -1;
+    if (a[0] > b[0]) return 1;
+    return 0;
+}
+
+function sortStudents([instructor, students]) {
+    return [
+        instructor,
+        students.sort((a, b) => (a === b ? 0 : a < b ? -1 : 1))
+    ];
+}
+
 function makeTable() {
     // Create the table-formatted data for each instructor:students relationship
-    const data = Object.entries(assigned).map(([name, students]) => makeRow(name, students));
+    const data = Object.entries(assigned)
+        .sort(sortInstructors)
+        .map(sortStudents)
+        .map(makeRow);
 
     // Get today's date in MM/DD/YYYY format
     const today = new Date().toLocaleString().split(',')[0];
@@ -34,7 +58,9 @@ function makeTable() {
         <table class="table table-bordered table-sm">
             <thead>
                 <tr>
-                    <th scope="col" colspan=2>Homework Randomizations for the week of ${today}</th>
+                    <th scope="col" colspan=2>
+                        Homework Randomizations for the week of ${today}
+                    </th>
                 </tr>
                 <tr>
                     <th scope="col">Instructor</th>
@@ -73,7 +99,7 @@ function makeHTML() {
     // Replace spacing between tags with whitespace
     // Remove whitespace from beginning
     // Return "minified" HTML
-    return html.replace(/>\s*</g, '><').replace(/^\s*/, '')
+    return html.replace(/>\s*</g, '><').replace(/^\s*/, '');
 }
 
 async function main() {
