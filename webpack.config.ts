@@ -8,7 +8,7 @@ import { resolve } from 'path';
 const config: webpack.Configuration = {
     entry: resolve('src/index.tsx'),
     output: {
-        path: resolve('dist'),
+        path: resolve('assets'),
         filename: 'app.js'
     },
     module: {

@@ -5,11 +5,11 @@ from json import dump, load
 from random import shuffle
 
 # Data is an arrload(homeworks)ay that will hold all of the homework assignments and be
-# written as JSON to ./data.json
+# written as JSON to ./assets/data.json
 data = []
 
 # Load the class configuration file
-with open('./class.config.json') as class_config:
+with open('./config/class.json') as class_config:
     # Parse the class configuration file as JSON
     parsed = load(class_config)
 
@@ -50,10 +50,10 @@ def assign(homework, title):
 
 # Open the homeworks.json file, which defines the different homework assignments,
 # and pass its data to the assign function.
-with open('./homeworks.json') as homeworks:
+with open('./config/homeworks.json') as homeworks:
     for homework in load(homeworks):
         assign(homework['homework'], homework['title'])
 
-# Write the `data` object to ./data/current.json as a JSON-formatted structure.
+# Write the `data` object to ./assets/data.json as a JSON-formatted structure.
 with open('./assets/data.json', 'w') as outfile:
    dump(data, outfile)
