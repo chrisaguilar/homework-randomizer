@@ -1,41 +1,59 @@
 #!/usr/bin/env python
 
-from json import dump
+from math import floor
+from json import dump, load
 from random import shuffle
 
-students = [
-    'Adam Peery', 'Adam Troy', 'Akshay Choudhary', 'Anish Nair',
-    'Anisha Sachar', 'Benjamin Opurum', 'Brandon Matthews', 'Charronda King',
-    'Courtney Williams', 'Daniel Pimentel', 'Daniela Jaros', 'Darreck Bender',
-    'Daryl Bilderback', 'David Shreve', 'Dean Dyer', 'Denise Gallardo',
-    'Derek Johnson', 'Desmon Stanford', 'Dexter Berassa', 'Erica Nichols',
-    'Gene Cannella', 'Hollye Hamilton', 'James Henley', 'James Lemons',
-    'Jordan Scott', 'Joshua Franklin', 'Judi Perez', 'Kavin Davenport',
-    'Limbert Bontigao', 'Matt Gohr', 'Matt Jones', 'Nic Branker',
-    'Phillip Hampton', 'Rosita Cabrera', 'Shirley Mae Samonte', 'Taylor Bennett',
-    'Taylor Rodrigs', 'Teresa Jackson', 'Thomas Gentle', 'Tyler Maran',
-    'Yvonne Reichenbach'
-]
+# Data is an arrload(homeworks)ay that will hold all of the homework assignments and be
+# written as JSON to ./data.json
+data = []
 
-assigned = {}
+# Load the class configuration file
+with open('./class.config.json') as class_config:
+    # Parse the class configuration file as JSON
+    parsed = load(class_config)
 
-# Use random.shuffle to randomize the students array in-place
-shuffle(students)
+    # students is an array of strings that holds the name of every student
+    students = parsed['students']
 
-# Divide the students into equally-sized sub-arrays with overflow put into the last.
-divided = [students[i:i + 10] for i in range(0, len(students), 10)]
+    # instructors is an array of strings that holds the name of each instructor
+    # The TAs should be the first indices of the array so that they get the
+    # majority of students
+    instructors = parsed['instructors']
 
-def assign(name, section):
-    # Add the instructor:students relationship to the `assigned` object.
-    assigned[name] = section
+    # split_point is an integer that defines how many students each TA gets
+    # However many students are left over get passed to the main teacher,
+    # e.g. the last element in the instructors array
+    split_point = floor((len(students) - 1) / len(instructors))
 
-# Assign instructors to students
-assign('Chris', divided[0])
-assign('Danielle', divided[1])
-assign('Jack', divided[2])
-assign('Jieun', divided[3])
-assign('Andy', divided[4])
+def assign(homework, title):
 
-# Write the `assigned` object to ./assigned.json as a JSON-formatted structure.
-with open('./assigned.json', 'w') as outfile:
-    dump(assigned, outfile)
+    # The current homework assignment, represented by an object
+    current = {
+        'homework': int(homework),
+        'title': title,
+        'assignments': {}
+    }
+
+    # Use random.shuffle to randomize the students array in-place
+    shuffle(students)
+
+    # Divide the students into equally-sized sub-arrays with overflow put into the last.
+    divided = [students[i:i + split_point] for i in range(0, len(students), split_point)]
+
+    # Assign instructors to students
+    for count, instructor in enumerate(instructors):
+       current['assignments'][instructor] = divided[count]
+
+    # Append the current assignment to the data array
+    data.append(current)
+
+# Open the homeworks.json file, which defines the different homework assignments,
+# and pass its data to the assign function.
+with open('./homeworks.json') as homeworks:
+    for homework in load(homeworks):
+        assign(homework['homework'], homework['title'])
+
+# Write the `data` object to ./data/current.json as a JSON-formatted structure.
+with open('./data.json', 'w') as outfile:
+   dump(data, outfile)
