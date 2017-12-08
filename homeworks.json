@@ -1,0 +1,21 @@
+[
+    { "homework": 2, "title": "CSS Framework & Media Queries" },
+    { "homework": 3, "title": "JavaScript Homework" },
+    { "homework": 4, "title": "jQuery Homework" },
+    { "homework": 5, "title": "jQuery & JavaScript Homework" },
+    { "homework": 6, "title": "APIs & AJAX Homework" },
+    { "homework": 7, "title": "Firebase Homework" },
+    { "homework": 1, "title": "Project" },
+    { "homework": 8, "title": "Node.js Homework" },
+    { "homework": 9, "title": "Advanced JavaScript Homework" },
+    { "homework": 10, "title": "MySQL Homework" },
+    { "homework": 11, "title": "Express.js Homework" },
+    { "homework": 12, "title": "MySQL Full Stack App" },
+    { "homework": 13, "title": "Sequelize Homework" },
+    { "homework": 14, "title": "Project" },
+    { "homework": 15, "title": "MongoDB Homework" },
+    { "homework": 16, "title": "React Homework" },
+    { "homework": 17, "title": "Regionalized HW" },
+    { "homework": 18, "title": "Regionalized HW" },
+    { "homework": 3, "title": "Project" }
+]
