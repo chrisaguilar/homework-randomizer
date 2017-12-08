@@ -5,32 +5,27 @@
 import axios from 'axios';
 import * as React from 'react';
 
+import { IAppProps, IAppState } from './interfaces';
 import { Navigation } from './Navigation';
 import { Table } from './Table';
 
-export interface IAssignment {
-    [key: string]: string[];
-}
-export interface IData {
-    assignments: IAssignment;
-    homework: number;
-    title: string;
-}
-export interface IAppState {
-    current: number | null;
-    data: IData[];
-}
-export class App extends React.Component<any, IAppState> {
-    public constructor (props: any) {
+export class App extends React.Component<IAppProps, IAppState> {
+    public constructor (props: IAppProps) {
         super(props);
-        this.state = { data: [], current: null };
-
+        this.state = {
+            data: [],
+            current: null
+        };
         this.setCurrent = this.setCurrent.bind(this);
     }
 
     public async componentDidMount () {
         const { data } = await axios('assets/data.json');
         this.setState({ data });
+    }
+
+    public setCurrent (current: number) {
+        this.setState({ current });
     }
 
     public render () {
@@ -46,9 +41,5 @@ export class App extends React.Component<any, IAppState> {
                 </div>
             </div>
         );
-    }
-
-    public setCurrent (current: number) {
-        this.setState({ current });
     }
 }
