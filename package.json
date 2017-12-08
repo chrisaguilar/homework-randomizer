@@ -1,0 +1,39 @@
+{
+    "name": "homework-randomizer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "update-index.js",
+    "scripts": {
+        "build": "ts-node node_modules/.bin/webpack --config webpack.config.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/chrisaguilar/homework-randomizer.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/chrisaguilar/homework-randomizer/issues"
+    },
+    "homepage": "https://github.com/chrisaguilar/homework-randomizer#readme",
+    "dependencies": {
+        "axios": "^0.17.1",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0"
+    },
+    "devDependencies": {
+        "@chrisaguilar/tslint-config": "^1.0.1",
+        "@types/axios": "^0.14.0",
+        "@types/node": "^8.0.57",
+        "@types/react": "^16.0.28",
+        "@types/react-dom": "^16.0.3",
+        "@types/webpack": "^3.8.1",
+        "lite-server": "^2.3.0",
+        "ts-loader": "^3.2.0",
+        "ts-node": "^3.3.0",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.2",
+        "webpack": "^3.10.0"
+    }
+}
