@@ -55,5 +55,5 @@ with open('./homeworks.json') as homeworks:
         assign(homework['homework'], homework['title'])
 
 # Write the `data` object to ./data/current.json as a JSON-formatted structure.
-with open('./data.json', 'w') as outfile:
+with open('./assets/data.json', 'w') as outfile:
    dump(data, outfile)
