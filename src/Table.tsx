@@ -4,51 +4,75 @@
 
 import * as React from 'react';
 
-function makeRow ([name, students]: [string, string[]]) {
-    const studentRows = students.slice(1).map((student, i) => (
-        <tr key={ i }>
-            <td>{ student }</td>
-        </tr>
-    ));
+import { ITableProps, ITableState } from './interfaces';
 
-    return (
-        <React.Fragment>
-            <tr>
-                <th scope='row' rowSpan={ students.length } style={ { verticalAlign: 'middle' } }>
-                    { name }
-                </th>
-                <td>{ students[0] }</td>
-            </tr>
-            { studentRows }
-        </React.Fragment>
-    );
-}
+type relation = [string, string | string[]];
 
-function sortInstructors (a: [string, any], b: [string, any]) {
-    if (a[0] < b[0]) return -1;
-    if (a[0] > b[0]) return 1;
-
-    return 0;
-}
-
-function sortStudents ([instructor, students]: [string, string[]]) {
-    return [instructor, students.sort((a, b) => (a === b ? 0 : a < b ? -1 : 1))];
-}
-
-export class Table extends React.Component<any, any> {
+export class Table extends React.Component<ITableProps, ITableState> {
     public constructor (props: any) {
         super(props);
-        this.state = { data: [], selected: {}, current: null, title: '' };
+
+        this.state = { data: [], selected: [], current: null, title: '' };
+
+        this.sortInstructors = this.sortInstructors.bind(this);
+        this.sortStudents = this.sortStudents.bind(this);
+        this.makeRows = this.makeRows.bind(this);
     }
 
-    public componentWillReceiveProps (nextProps) {
-        const { current, data } = nextProps;
+    private makeRows (data: (string | string[])[], index: number) {
+            const instructor = data[0];
+            const students = data[1];
 
+            const studentRows = (students.slice(1) as string[]).map((student, i) => (
+                <tr key={ i }>
+                    <td>{ student }</td>
+                </tr>
+            ));
+
+            return (
+                <React.Fragment key={ index }>
+                    <tr>
+                        <th scope='row' rowSpan={ students.length }>
+                            { instructor }
+                        </th>
+                        <td>{ students[0] }</td>
+                    </tr>
+                    { studentRows }
+                </React.Fragment>
+            );
+    }
+
+    public setSelected () {
+        for (const homework of this.state.data) {
+            if (homework.homework === this.state.current) {
+                this.setState({ selected: Object.entries(homework.assignments), title: homework.title });
+            }
+        }
+    }
+
+    private sortInstructors (a: relation, b: relation) {
+        return (a === b ? 0 : a < b ? -1 : 1);
+    }
+
+    private sortStudents (data: relation) {
+        const instructor = data[0];
+        const students = (data[1] as string[]).sort((a, b) => (a === b ? 0 : a < b ? -1 : 1));
+
+        return [instructor, students];
+    }
+
+    public componentWillReceiveProps (nextProps: ITableProps) {
+        const { current, data } = nextProps;
         this.setState({ current, data }, this.setSelected);
     }
 
     public render () {
-    if (!this.state.title) return <h3>Select an Assignment</h3>;
+        if (!this.state.title) return <h3>Select an Assignment</h3>;
+
+        const rows = this.state.selected
+            .sort(this.sortInstructors)
+            .map(this.sortStudents)
+            .map(this.makeRows);
 
         return (
             <table className='table table-bordered table-sm'>
@@ -63,21 +87,8 @@ export class Table extends React.Component<any, any> {
                         <th scope='col'>Student</th>
                     </tr>
                 </thead>
-                <tbody>
-                    { Object.entries(this.state.selected)
-                        .sort(sortInstructors)
-                        .map(sortStudents)
-                        .map(makeRow) }
-                </tbody>
+                <tbody>{ rows }</tbody>
             </table>
         );
-    }
-
-    public setSelected () {
-        for (const homework of this.state.data) {
-            if (homework.homework === this.state.current) {
-                this.setState({ selected: homework.assignments, title: homework.title });
-            }
-        }
     }
 }

@@ -12,7 +12,7 @@ export interface IAppState {
 }
 
 export interface IAssignment {
-   [key: string]: string[];
+   [key: string]: string | string[];
 }
 
 export interface IData {
@@ -22,8 +22,8 @@ export interface IData {
 }
 
 export interface IListing {
-    title: string;
     homework: number;
+    title: string;
 }
 
 export interface INavigationProps {
@@ -33,4 +33,16 @@ export interface INavigationProps {
 
 export interface INavigationState {
     data: IListing[];
+}
+
+export interface ITableProps {
+    current: number | null;
+    data: IData[];
+}
+
+export interface ITableState {
+    current: number | null;
+    data: IData[];
+    selected: [string, string | string[]][];
+    title: string;
 }
