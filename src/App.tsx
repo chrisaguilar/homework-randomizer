@@ -12,28 +12,37 @@ import { Table } from './Table';
 export class App extends React.Component<IAppProps, IAppState> {
     public constructor (props: IAppProps) {
         super(props);
+
         this.state = {
+            current: null,
             data: [],
-            current: null
+            error: null
         };
+
         this.setCurrent = this.setCurrent.bind(this);
     }
 
     public async componentDidMount () {
-        const { data } = await axios('assets/data.json');
-        this.setState({ data });
+        try {
+            const { data } = await axios('assets/data.json');
+            this.setState({ data });
+        } catch (e) {
+            this.setState({ error: <h1>There was an error! 😞 Please reload!</h1> });
+        }
     }
 
-    public setCurrent (current: number) {
-        this.setState({ current });
+    public setCurrent (next: number) {
+        this.setState({ current: next });
     }
 
     public render () {
-        return (
+        return this.state.error ? (
+            this.state.error
+        ) : (
             <div className='container'>
                 <div className='row justify-content-center'>
                     <div className='col-6'>
-                        <Navigation data={ this.state.data } setCurrent={ this.setCurrent }/>
+                        <Navigation data={ this.state.data } setCurrent={ this.setCurrent } />
                     </div>
                     <div className='col-6'>
                         <Table data={ this.state.data } current={ this.state.current } />
