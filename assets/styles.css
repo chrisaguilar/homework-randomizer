@@ -4,3 +4,7 @@ td,
 th {
     text-align: center;
 }
+
+th[scope='row'] {
+    vertical-align: middle;
+}
