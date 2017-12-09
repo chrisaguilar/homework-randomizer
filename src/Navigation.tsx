@@ -9,6 +9,7 @@ import { INavigationProps, INavigationState } from './interfaces';
 export class Navigation extends React.Component<INavigationProps, INavigationState> {
     public constructor (props: any) {
         super(props);
+
         this.state = {
             data: []
         };
