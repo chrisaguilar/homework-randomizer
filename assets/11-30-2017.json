@@ -1,0 +1,55 @@
+{
+    "homework": 2,
+    "title": "",
+    "assignments": {
+        "Chris": [
+            "Anish Nair",
+            "Taylor Bennett",
+            "Joshua Franklin",
+            "Shirley Mae Samonte",
+            "Courtney Williams",
+            "Benjamin Opurum",
+            "Darreck Bender",
+            "Dexter Berassa",
+            "Yvonne Reichenbach",
+            "Rosita Cabrera"
+        ],
+        "Danielle": [
+            "Matt Gohr",
+            "Denise Gallardo",
+            "Akshay Choudhary",
+            "Adam Troy",
+            "Thomas Gentle",
+            "Charronda King",
+            "Daniel Pimentel",
+            "Anisha Sachar",
+            "Phillip Hampton",
+            "Daniela Jaros"
+        ],
+        "Jack": [
+            "Judi Perez",
+            "Kavin Davenport",
+            "Tyler Maran",
+            "Gene Cannella",
+            "Dean Dyer",
+            "James Lemons",
+            "Adam Peery",
+            "James Henley",
+            "Daryl Bilderback",
+            "Limbert Bontigao"
+        ],
+        "Jieun": [
+            "Matt Jones",
+            "Jordan Scott",
+            "Hollye Hamilton",
+            "Desmon Stanford",
+            "Nic Branker",
+            "Brandon Matthews",
+            "Erica Nichols",
+            "Taylor Rodrigs",
+            "Teresa Jackson",
+            "Derek Johnson"
+        ],
+        "Andy": ["David Shreve"]
+    }
+}

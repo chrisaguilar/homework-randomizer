@@ -1,0 +1,15 @@
+{
+    "extends": "@chrisaguilar/tslint-config",
+    "rules": {
+        "member-ordering": false,
+        "no-empty-interface": false,
+        "no-empty-interfaces": false,
+        "no-magic-numbers": false,
+        "no-null-keyword": false,
+        "no-relative-imports": false,
+        "prefer-function-over-method": false,
+        "react-a11y-anchors": false,
+        "react-this-binding-issue": false,
+        "react-tsx-curly-spacing": false
+    }
+}

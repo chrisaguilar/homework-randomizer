@@ -1,0 +1,10 @@
+h1,
+h3,
+td,
+th {
+    text-align: center;
+}
+
+th[scope='row'] {
+    vertical-align: middle;
+}
