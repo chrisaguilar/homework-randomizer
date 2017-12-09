@@ -22,6 +22,10 @@ export class App extends React.Component<IAppProps, IAppState> {
         this.setCurrent = this.setCurrent.bind(this);
     }
 
+    public setCurrent (next: number) {
+        this.setState({ current: next });
+    }
+
     public async componentDidMount () {
         try {
             const { data } = await axios('assets/data.json');
@@ -29,10 +33,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         } catch (e) {
             this.setState({ error: <h1>There was an error! 😞 Please reload!</h1> });
         }
-    }
-
-    public setCurrent (next: number) {
-        this.setState({ current: next });
     }
 
     public render () {
