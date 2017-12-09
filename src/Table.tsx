@@ -42,7 +42,7 @@ export class Table extends React.Component<ITableProps, ITableState> {
             );
     }
 
-    public setSelected () {
+    private setSelected () {
         for (const homework of this.state.data) {
             if (homework.homework === this.state.current) {
                 this.setState({ selected: Object.entries(homework.assignments), title: homework.title });
