@@ -4,15 +4,23 @@
 
 import * as React from 'react';
 
-export class Navigation extends React.Component<any, any> {
+import { INavigationProps, INavigationState } from './interfaces';
+
+export class Navigation extends React.Component<INavigationProps, INavigationState> {
     public constructor (props: any) {
         super(props);
         this.state = {
-            data: this.props.data.map(({ title, homework, assignments }) => ({ title, homework }))
+            data: []
         };
     }
 
-    public componentWillReceiveProps (nextProps) {
+    public componentDidMount () {
+        this.setState({
+            data: this.props.data.map(({ title, homework }) => ({ title, homework }))
+        });
+    }
+
+    public componentWillReceiveProps (nextProps: INavigationProps) {
         const { data } = nextProps;
         this.setState({ data });
     }
