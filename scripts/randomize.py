@@ -6,7 +6,7 @@ from random import shuffle
 
 data = []
 
-with open('./config/class.json') as class_config:
+with open('../config/class.json') as class_config:
     parsed = load(class_config)
 
     students = parsed['students']
@@ -30,9 +30,9 @@ def assign(homework, title):
 
     data.append(current)
 
-with open('./config/homeworks.json') as homeworks:
+with open('../config/homeworks.json') as homeworks:
     for homework in load(homeworks):
         assign(homework['homework'], homework['title'])
 
-with open('./assets/data.json', 'w') as outfile:
+with open('../assets/data.json', 'w') as outfile:
    dump(data, outfile)
